@@ -1,6 +1,7 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
 const bcrypt= require("bcrypt")
+const cors = require("cors")
 const { connection } = require("./config/db")
 const {Usermodel} = require("./models/User.model")
 const { BugRouter } = require("./routes/data.route")
@@ -8,6 +9,10 @@ const { authenticate } = require("./middleware/authenticate")
 
 const app = express()
 app.use(express.json())
+
+app.use(cors({
+  origin:"*"
+}))
 
 
 app.get("/" , (req,res) => {
@@ -62,7 +67,7 @@ app.post("/login", async(req,res) =>{
   }
 })
 
-app.use(authenticate)
+// app.use(authenticate)
 app.use(BugRouter)
 
 
