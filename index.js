@@ -19,9 +19,14 @@ app.get("/" , (req,res) => {
     res.send("welcome home")
 })
 
+app.get("/signupdata", async (req,res) =>{
+    const user = await Usermodel.find()
+    res.send(user)
+})
+
 
 app.post("/signup", async(req,res) => {
-  const {email,password}= req.body;
+  const {email,password,name}= req.body;
      const userPresent = await Usermodel.findOne({email})
        if(userPresent){
          res.send("user is alredy present")
@@ -29,7 +34,7 @@ app.post("/signup", async(req,res) => {
        }
    try{
      bcrypt.hash(password, 4, async function(err, hash) {
-         const user = new Usermodel({email,password:hash})
+         const user = new Usermodel({email,password:hash,name})
          await user.save()
          res.send("Signup sucesfully")
      })
