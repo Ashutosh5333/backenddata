@@ -45,6 +45,7 @@ app.post("/signup", async(req,res) => {
    }
 })
 
+
 app.post("/login", async(req,res) =>{
   const {email,password} = req.body;
   try{
@@ -55,24 +56,24 @@ app.post("/login", async(req,res) =>{
         console.log("hash",hashed_password)
         bcrypt.compare(password,hashed_password,function(err, result){
             if(result){
-                const token= jwt.sign({"mockkk":"mock"}, "hush");
+                const token= jwt.sign({userId:user[0]._id}, "hush");
                 res.send({"msg":"Login sucessfull", "token":token})
             }
             else{
-                res.send("login failed 1")
+              res.send("authentication failed 1")
             }
 
         }) }
         else{
-          res.send("Login failed 2")
+          res.send("authentication failed 2")
         }
   }
   catch{
-    res.send("Login failed 3")
+    res.send("authentication failed 3")
   }
 })
 
-// app.use(authenticate)
+app.use(authenticate)
 app.use(BugRouter)
 
 

@@ -3,7 +3,8 @@ const mongoose = require("mongoose")
 
 const BugSchema = mongoose.Schema({
     title:String,
-    category:[]
+    category:[],
+    userId:String
 })
 
 const  BugModel = mongoose.model("Bug",BugSchema)

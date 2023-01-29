@@ -7,15 +7,17 @@ const jwt = require("jsonwebtoken")
        if(token){
          const decoded = jwt.verify(token, "hush")
           if(decoded){
+             const userId= decoded.userId
+             req.body.userId=userId
              console.log(decoded)
             next()
           }
           else{
-            res.send("Please Login again")
+            res.send({msg:"you are not authenticated login please"})
           }
        } 
        else{
-        res.send("Please Login")
+        res.send({msg:"you are not authenticated"})
        }
 
  }
