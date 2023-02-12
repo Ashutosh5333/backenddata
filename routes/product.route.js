@@ -5,11 +5,16 @@ const { ProductModel } = require("../models/Product.model")
 
 
     productRouter.get("/product", async (req,res) => {
-           const userId = req.body.userId
-         const product = await ProductModel.find({userId:userId})
-          console.log(product)
-          res.send(product)
-        //   res.send("welcome to product page")
+            try{
+              // const userId = req.body.userId
+              const product = await ProductModel.find({userId:req.body.userId})
+            
+               res.send(product)
+            }
+            catch(err){
+              console.log(err)
+            }
+      
     })
 
     productRouter.post("/product/create", async (req,res) =>{
