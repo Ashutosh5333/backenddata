@@ -6,6 +6,7 @@ const { connection } = require("./config/db")
 const {Usermodel} = require("./models/User.model")
 const { BugRouter } = require("./routes/data.route")
 const { authenticate } = require("./middleware/authenticate")
+const { productRouter } = require("./routes/product.route")
 
 const app = express()
 app.use(express.json())
@@ -47,25 +48,26 @@ app.post("/signup", async(req,res) => {
 
 
 app.post("/login", async(req,res) =>{
-  const {email,password} = req.body;
+  const {email,password,name,_id,image} = req.body;
   try{
+    
    const user = await Usermodel.find({email})
-      console.log(user)
+      // console.log(user)
      if(user.length > 0){
         const hashed_password = user[0].password;
-        console.log("hash",hashed_password)
+        // console.log("hash",hashed_password)
         bcrypt.compare(password,hashed_password,function(err, result){
             if(result){
                 const token= jwt.sign({userId:user[0]._id}, "hush");
-                res.send({"msg":"Login sucessfull", "token":token})
+                res.send({"msg":"Login sucessfull", "token":token , data:{email,name,_id,image} })
             }
             else{
-              res.send("authentication failed 1")
+              res.send("Please check password")
             }
 
         }) }
         else{
-          res.send("authentication failed 2")
+          res.send("first registered")
         }
   }
   catch{
@@ -73,7 +75,8 @@ app.post("/login", async(req,res) =>{
   }
 })
 
-// app.use(authenticate)
+app.use(authenticate)
+app.use(productRouter)
 app.use(BugRouter)
 
 
