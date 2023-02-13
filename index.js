@@ -49,6 +49,7 @@ app.post("/signup", async(req,res) => {
 
 app.post("/login", async(req,res) =>{
   const {email,password,name,_id,image} = req.body;
+  
   try{
     
    const user = await Usermodel.find({email})

@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken")
           if(decoded){
              const userId= decoded.userId
              req.body.userId=userId
-             console.log(decoded)
+            //  console.log(decoded)
             next()
           }
           else{

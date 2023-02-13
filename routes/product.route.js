@@ -8,7 +8,7 @@ const { ProductModel } = require("../models/Product.model")
             try{
               // const userId = req.body.userId
               const product = await ProductModel.find({userId:req.body.userId})
-            
+              console.log(product)
                res.send(product)
             }
             catch(err){
