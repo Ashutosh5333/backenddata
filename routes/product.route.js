@@ -7,7 +7,7 @@ const { ProductModel } = require("../models/Product.model")
     productRouter.get("/product", async (req,res) => {
             try{
               // const userId = req.body.userId
-              const product = await ProductModel.find({userId:req.body.userId})
+              const product = await ProductModel.find().populate("postedby",["name","email","image"])
               console.log(product)
                res.send(product)
             }
@@ -17,12 +17,13 @@ const { ProductModel } = require("../models/Product.model")
       
     })
 
-    productRouter.post("/product/create", async (req,res) =>{
+    productRouter.post("/product/create", async (req,res) => {
            const payload= req.body
+            const userId = req.body.userId
             try{
-              const product = await ProductModel.create(payload)
+              const product = await ProductModel.create({...payload,postedby:userId})
                  await product.save()
-               console.log(payload)
+              //  console.log(payload)
                res.send({"msg" :"data created sucessfully"})
             }catch(err){
                 console.log(err)
