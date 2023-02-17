@@ -17,6 +17,21 @@ const { ProductModel } = require("../models/Product.model")
       
     })
 
+   //---------- my post -------------//
+
+
+   productRouter.get("/mypost", async (req,res) => {
+    try{
+      const  productData = await UserDataModel.find({UserId:req.body.UserId}).populate("postedby",["name","email","image"]) 
+         res.send(productData)
+    }
+    catch(err){
+      console.log(err)
+      res.send("not authrized")
+    }
+})
+
+    // -------------------------
     productRouter.post("/product/create", async (req,res) => {
            const payload= req.body
             const userId = req.body.userId
