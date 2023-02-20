@@ -4,7 +4,7 @@
  const ProductSchema= mongoose.Schema({
      description:String,
      title:String,
-     pic:[],
+     pic:String,
      userId:String,
      postedby:{type:mongoose.Types.ObjectId,ref:"user",required:true}
  },{
