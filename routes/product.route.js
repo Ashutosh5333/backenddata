@@ -22,7 +22,7 @@ const { ProductModel } = require("../models/Product.model")
 
    productRouter.get("/mypost", async (req,res) => {
     try{
-      const  productData = await UserDataModel.find({UserId:req.body.UserId}).populate("postedby",["name","email","image"]) 
+      const  productData = await ProductModel.find({UserId:req.body.UserId}).populate("postedby",["name","email","image"]) 
          res.send(productData)
     }
     catch(err){
