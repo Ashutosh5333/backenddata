@@ -90,7 +90,7 @@ const { ProductModel } = require("../models/Product.model")
 })
 
   productRouter.put("/likes" ,(req,res) =>{
-         const userId = req.body.userId
+         const userId = req.user.userId
          post.findByIdAndUpdate(req.body.postId, {
             $push:{likes:userId}
          }, {
@@ -106,7 +106,7 @@ const { ProductModel } = require("../models/Product.model")
   })
 
   productRouter.put("/unlikes" ,(req,res) =>{
-    const userId = req.body.userId
+    const userId = req.user.userId
     post.findByIdAndUpdate(req.body.postId, {
        $pull:{likes:userId}
     }, {
