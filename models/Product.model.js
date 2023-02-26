@@ -9,7 +9,7 @@
      likes:[{type:mongoose.Types.ObjectId,ref:"user"}],
      comments:[{
       text:String,
-      postedby:{type:ObjectId,ref:"user"}
+      postedby:{type:mongoose.Types.ObjectId,ref:"user"}
      }],
      postedby:{type:mongoose.Types.ObjectId,ref:"user",required:true}
  },{
