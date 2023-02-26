@@ -70,6 +70,7 @@ const { ProductModel } = require("../models/Product.model")
 
 // ------------- Delete req ------------ //
     
+
     productRouter.delete("/product/delete/:prodId" , async (req,res) =>{
         const prodId = req.params.prodId
         const userId = req.body.userId
@@ -92,7 +93,7 @@ const { ProductModel } = require("../models/Product.model")
   productRouter.put("/likes" ,(req,res) =>{
         //  const userId = req.user._id
          post.findByIdAndUpdate(req.body.postId, {
-            $push:{likes:req.userId}
+            $push:{likes:userId}
          }, {
           new:true
          }).exec((err,result) =>{
