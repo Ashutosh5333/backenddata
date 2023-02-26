@@ -1,11 +1,12 @@
  const mongoose = require("mongoose")
-//  const {ObjectId} = mongoose.Schema.Types
+
 
  const ProductSchema= mongoose.Schema({
      description:String,
      title:String,
      pic:[],
      userId:String,
+     likes:[{type:mongoose.Types.ObjectId,ref:"user"}],
      postedby:{type:mongoose.Types.ObjectId,ref:"user",required:true}
  },{
     timestamps:true

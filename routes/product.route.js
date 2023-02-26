@@ -22,7 +22,7 @@ const { ProductModel } = require("../models/Product.model")
 
    productRouter.get("/mypost", async (req,res) => {
     try{
-      const  productData = await ProductModel.find({userId:req.body.userId}).populate("postedby",["name","email","image"]) 
+      const  productData = await ProductModel.find({userId:req.body.userId}).populate("postedby",["name","email","image","username"]) 
          res.send(productData)
     }
     catch(err){
@@ -31,7 +31,7 @@ const { ProductModel } = require("../models/Product.model")
     }
 })
 
-    // -------------------------
+    // ------------------------- Post ------------------------- //
     productRouter.post("/product/create", async (req,res) => {
            const payload= req.body
             const userId = req.body.userId
@@ -45,6 +45,9 @@ const { ProductModel } = require("../models/Product.model")
                 res.send({"msg" :"Something went wrongs"})
             }
     })
+
+    
+// ------------- Patch req ------------ //
 
     productRouter.patch("/product/edit/:prodId" , async (req,res) =>{
               const prodId = req.params.prodId
@@ -65,6 +68,7 @@ const { ProductModel } = require("../models/Product.model")
 
     })
 
+// ------------- Delete req ------------ //
     
     productRouter.delete("/product/delete/:prodId" , async (req,res) =>{
         const prodId = req.params.prodId
@@ -84,6 +88,40 @@ const { ProductModel } = require("../models/Product.model")
         }
 
 })
+
+  productRouter.put("/likes" ,(req,res) =>{
+         const userId = req.body.userId
+         post.findByIdAndUpdate(req.body.postId, {
+            $push:{likes:userId}
+         }, {
+          new:true
+         }).exec((err,result) =>{
+           if(err){
+            return res.status(422).json({error:err})
+           }
+           else{
+             res.json(result)
+           }
+         })  
+  })
+
+  productRouter.put("/unlikes" ,(req,res) =>{
+    const userId = req.body.userId
+    post.findByIdAndUpdate(req.body.postId, {
+       $pull:{likes:userId}
+    }, {
+     new:true
+    }).exec((err,result) =>{
+      if(err){
+       return res.status(422).json({error:err})
+      }
+      else{
+        res.json(result)
+      }
+    })   
+})
+
+
 
 
 
