@@ -8,6 +8,7 @@ const { ProductModel } = require("../models/Product.model")
             try{
               // const userId = req.body.userId
               const product = await ProductModel.find().populate("postedby",["name","email","image"])
+              .populate("comments.postedby",["name","_id","image","username"])
               console.log(product)
                res.send(product)
             }
@@ -122,6 +123,28 @@ const { ProductModel } = require("../models/Product.model")
         res.json(result)
       }
     })   
+})
+
+
+productRouter.put("/comment" ,(req,res) =>{
+  const  comment ={
+      text:req.body.text,
+      postedby:userId
+  } 
+  post.findByIdAndUpdate(req.body.postId, {
+     $push:{comments:comment}
+  }, {
+   new:true
+  }).populate("comments.postedby",["name","_id","image","username"]) 
+  .populate("postedby",["name","_id","image","username"])
+  .exec((err,result) =>{
+    if(err){
+     return res.status(422).json({error:err})
+    }
+    else{
+      res.json(result)
+    }
+  })   
 })
 
 
