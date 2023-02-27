@@ -1,4 +1,5 @@
- const express = require("express")
+ const { json } = require("express")
+const express = require("express")
 const { ProductModel } = require("../models/Product.model")
 
  const productRouter = express.Router()
@@ -75,7 +76,7 @@ const { ProductModel } = require("../models/Product.model")
     productRouter.delete("/product/delete/:prodId" , async (req,res) =>{
         const prodId = req.params.prodId
         const userId = req.body.userId
-        const payload=req.body
+        
         try{
            const productdata = await ProductModel.findOne({_id:prodId})
              if(userId!==productdata.userId){
@@ -91,9 +92,9 @@ const { ProductModel } = require("../models/Product.model")
 
 })
 
-  productRouter.put("/likes" ,(req,res) =>{
-        //  const userId = req.user._id
-         post.findByIdAndUpdate(req.body.postId, {
+  productRouter.put("/likes/:postId" ,(req,res) =>{
+         const userId = req.body.userId
+        ProductModel.findByIdAndUpdate(req.params.postId, {
             $push:{likes:userId}
          }, {
           new:true
@@ -109,9 +110,9 @@ const { ProductModel } = require("../models/Product.model")
 
 
 
-  productRouter.put("/unlikes" ,(req,res) =>{
-    const userId = req.user.userId
-    post.findByIdAndUpdate(req.body.postId, {
+  productRouter.put("/unlikes/:postId" ,(req,res) =>{
+    const userId = req.body.userId
+    ProductModel.findByIdAndUpdate(req.params.postId, {
        $pull:{likes:userId}
     }, {
      new:true
@@ -126,12 +127,13 @@ const { ProductModel } = require("../models/Product.model")
 })
 
 
-productRouter.put("/comment" ,(req,res) =>{
+productRouter.put("/comment/:postId" ,(req,res) => {
+   const userId = req.body.userId
   const  comment ={
       text:req.body.text,
       postedby:userId
   } 
-  post.findByIdAndUpdate(req.body.postId, {
+  ProductModel.findByIdAndUpdate(req.params.postId, {
      $push:{comments:comment}
   }, {
    new:true
@@ -146,6 +148,31 @@ productRouter.put("/comment" ,(req,res) =>{
     }
   })   
 })
+ 
+// ---------- like ---------- //
+
+// productRouter.put("/likes/:prodId" , async (req,res) =>{
+//   try{
+//       const prodId= req.params.prodId
+//        const post = await ProductModel.findById(prodId)
+  
+//         //  if (post.likes.filter(like => like.userId === post.likes.userId).length>0 ){
+//         //   return res.json(400).json({msg:"Post already liked"})
+//         //  }
+//         //  const prodd= req.params.prodId
+//           post.likes.unshift({userId:req.userId})
+//             // post.likes.push({userId:req.body.userId})
+//             //  post.likes.push({userId:req.body.userId})
+//           await post.save();
+//           res.json(post.likes)
+//     }catch(err){
+//       console.log(err)
+//       res.status(500).send("Server Error")
+//     }
+// })
+
+
+
 
 
 
