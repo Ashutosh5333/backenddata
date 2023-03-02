@@ -1,4 +1,4 @@
- const { json } = require("express")
+
 const express = require("express")
 const { ProductModel } = require("../models/Product.model")
 

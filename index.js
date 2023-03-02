@@ -7,6 +7,7 @@ const {Usermodel} = require("./models/User.model")
 const { BugRouter } = require("./routes/data.route")
 const { authenticate } = require("./middleware/authenticate")
 const { productRouter } = require("./routes/product.route")
+const { profileRouter } = require("./routes/Profileuser.route")
 
 const app = express()
 app.use(express.json())
@@ -79,6 +80,7 @@ app.post("/login", async(req,res) =>{
 app.use(authenticate)
 app.use(productRouter)
 app.use(BugRouter)
+app.use(profileRouter)
 
 
 app.listen(8000, async (req,res) =>{
