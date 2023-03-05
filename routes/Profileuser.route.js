@@ -5,6 +5,7 @@ const { Usermodel } = require("../models/User.model")
 const profileRouter = express.Router()
 
 
+
  profileRouter.get("/user/:Id", (req,res) =>{
        Usermodel.findOne({_id:req.params.Id})
        .select("-password")
