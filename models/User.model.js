@@ -5,7 +5,9 @@ const UserSchema = mongoose.Schema({
     email:String,
     password:String,
     image:String,
-    role:{type:String,default:"user"}
+    role:{type:String,default:"user"},
+    followers:{type:mongoose.Types.ObjectId,ref:"user"},
+    following:{type:mongoose.Types.ObjectId,ref:"user"}
 
 })
 

@@ -77,6 +77,53 @@ app.post("/login", async(req,res) =>{
   }
 })
 
+  app.put("/follow", async (req,res) =>{
+      const userId = req.body.userId
+         await Usermodel.findByIdAndUpdate(req.body.followId,{
+         $push:{followers:userId}
+     },{
+       new:true,
+     }), (err,result) =>{
+          if(err){
+             return res.status(422).json({error:err})
+          }
+           Usermodel.findByIdAndUpdate(req.body.followId,{
+            $push:{followers:userId}
+        },{
+          new:true
+        }).then(result =>{
+          res.json(result)
+        }).catch(err =>{
+           return res.status(422).json({error:err})
+        })
+      }
+ })
+
+ app.put("/unfollow", async (req,res) =>{
+  const userId = req.body.userId
+     await Usermodel.findByIdAndUpdate(req.body.followId,{
+     $pull:{followers:userId}
+ },{
+   new:true,
+ }), (err,result) =>{
+      if(err){
+         return res.status(422).json({error:err})
+      }
+       Usermodel.findByIdAndUpdate(req.body.followId,{
+        $pull:{followers:userId}
+    },{
+      new:true
+    }).then(result =>{
+      res.json(result)
+    }).catch(err =>{
+       return res.status(422).json({error:err})
+    })
+  }
+})
+
+    
+
+
 app.use(authenticate)
 app.use(productRouter)
 app.use(BugRouter)
