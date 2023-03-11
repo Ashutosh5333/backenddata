@@ -149,27 +149,7 @@ productRouter.put("/comment/:postId" ,(req,res) => {
   })   
 })
  
-// ---------- like ---------- //
 
-// productRouter.put("/likes/:prodId" , async (req,res) =>{
-//   try{
-//       const prodId= req.params.prodId
-//        const post = await ProductModel.findById(prodId)
-  
-//         //  if (post.likes.filter(like => like.userId === post.likes.userId).length>0 ){
-//         //   return res.json(400).json({msg:"Post already liked"})
-//         //  }
-//         //  const prodd= req.params.prodId
-//           post.likes.unshift({userId:req.userId})
-//             // post.likes.push({userId:req.body.userId})
-//             //  post.likes.push({userId:req.body.userId})
-//           await post.save();
-//           res.json(post.likes)
-//     }catch(err){
-//       console.log(err)
-//       res.status(500).send("Server Error")
-//     }
-// })
 
 
 

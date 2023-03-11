@@ -77,21 +77,24 @@ app.post("/login", async(req,res) =>{
   }
 })
 
-  app.put("/follow", async (req,res) =>{
+  app.put("/follow", (req,res) =>{
+        // res.send("hello")
+      // const followId = req.body.followId
       const userId = req.body.userId
-         await Usermodel.findByIdAndUpdate(req.body.followId,{
+         Usermodel.findByIdAndUpdate(req.body.followId,{
          $push:{followers:userId}
      },{
        new:true,
-     }), (err,result) =>{
+     }), (err,result) => {
           if(err){
              return res.status(422).json({error:err})
           }
-           Usermodel.findByIdAndUpdate(req.body.followId,{
-            $push:{followers:userId}
+           Usermodel.findByIdAndUpdate(userId,{
+            $push:{following: req.body.followId}
         },{
-          new:true
+          new:true 
         }).then(result =>{
+          //  console.log(result)
           res.json(result)
         }).catch(err =>{
            return res.status(422).json({error:err})
@@ -99,9 +102,11 @@ app.post("/login", async(req,res) =>{
       }
  })
 
+
+
  app.put("/unfollow", async (req,res) =>{
   const userId = req.body.userId
-     await Usermodel.findByIdAndUpdate(req.body.followId,{
+      Usermodel.findByIdAndUpdate(req.body.unfollowId,{
      $pull:{followers:userId}
  },{
    new:true,
@@ -109,8 +114,8 @@ app.post("/login", async(req,res) =>{
       if(err){
          return res.status(422).json({error:err})
       }
-       Usermodel.findByIdAndUpdate(req.body.followId,{
-        $pull:{followers:userId}
+       Usermodel.findByIdAndUpdate(userId,{
+        $pull:{following:req.body.unfollowId}
     },{
       new:true
     }).then(result =>{
