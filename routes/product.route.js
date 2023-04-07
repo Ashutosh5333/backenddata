@@ -5,7 +5,7 @@ const { ProductModel } = require("../models/Product.model")
  const productRouter = express.Router()
 
 
-    productRouter.get("/product", async (req,res) => {
+    productRouter.get("/insta", async (req,res) => {
             try{
               const product = await ProductModel.find().populate("postedby",["name","email","image"])
               .populate("comments.postedby",["name","_id","image","username"])
@@ -36,7 +36,7 @@ const { ProductModel } = require("../models/Product.model")
 
     // ------------------------- Post ------------------------- //
 
-    productRouter.post("/product/create", async (req,res) => {
+    productRouter.post("/insta/create", async (req,res) => {
            const payload= req.body
             const userId = req.body.userId
             try{
@@ -53,7 +53,7 @@ const { ProductModel } = require("../models/Product.model")
         // ------------- Patch req ------------ //
 
 
-    productRouter.patch("/product/edit/:prodId" , async (req,res) =>{
+    productRouter.patch("/insta/edit/:prodId" , async (req,res) =>{
               const prodId = req.params.prodId
               const userId = req.body.userId
               const payload=req.body
@@ -76,7 +76,7 @@ const { ProductModel } = require("../models/Product.model")
 // ------------- Delete req ------------ //
 
 
-    productRouter.delete("/product/delete/:prodId" , async (req,res) =>{
+    productRouter.delete("/insta/delete/:prodId" , async (req,res) =>{
         const prodId = req.params.prodId
         const userId = req.body.userId
         

@@ -4,7 +4,6 @@ const bcrypt= require("bcrypt")
 const cors = require("cors")
 const { connection } = require("./config/db")
 const {Usermodel} = require("./models/User.model")
-const { BugRouter } = require("./routes/data.route")
 const { authenticate } = require("./middleware/authenticate")
 const { productRouter } = require("./routes/product.route")
 const { profileRouter } = require("./routes/Profileuser.route")
@@ -58,7 +57,7 @@ app.post("/login", async(req,res) =>{
       // console.log(user)
      if(user.length > 0){
         const hashed_password = user[0].password;
-        // console.log("hash",hashed_password)
+  
         bcrypt.compare(password,hashed_password,function(err, result){
             if(result){
                 const token= jwt.sign({userId:user[0]._id}, "hush");
@@ -132,7 +131,6 @@ app.post("/login", async(req,res) =>{
 
 app.use(authenticate)
 app.use(productRouter)
-app.use(BugRouter)
 app.use(profileRouter)
 
 
