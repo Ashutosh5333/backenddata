@@ -7,10 +7,9 @@ const { ProductModel } = require("../models/Product.model")
 
     productRouter.get("/product", async (req,res) => {
             try{
-              // const userId = req.body.userId
               const product = await ProductModel.find().populate("postedby",["name","email","image"])
               .populate("comments.postedby",["name","_id","image","username"])
-              console.log(product)
+          
                res.send(product)
             }
             catch(err){
@@ -19,10 +18,12 @@ const { ProductModel } = require("../models/Product.model")
       
     })
 
+
+    
+
    //---------- my post -------------//
 
-
-   productRouter.get("/mypost", async (req,res) => {
+     productRouter.get("/mypost", async (req,res) => {
     try{
       const  productData = await ProductModel.find({userId:req.body.userId}).populate("postedby",["name","email","image","username"]) 
          res.send(productData)
@@ -31,16 +32,16 @@ const { ProductModel } = require("../models/Product.model")
       console.log(err)
       res.send("not authrized")
     }
-})
+   })
 
     // ------------------------- Post ------------------------- //
+
     productRouter.post("/product/create", async (req,res) => {
            const payload= req.body
             const userId = req.body.userId
             try{
               const product = await ProductModel.create({...payload,postedby:userId})
                  await product.save()
-              //  console.log(payload)
                res.send({"msg" :"data created sucessfully"})
             }catch(err){
                 console.log(err)
@@ -49,7 +50,8 @@ const { ProductModel } = require("../models/Product.model")
     })
 
     
-// ------------- Patch req ------------ //
+        // ------------- Patch req ------------ //
+
 
     productRouter.patch("/product/edit/:prodId" , async (req,res) =>{
               const prodId = req.params.prodId
@@ -70,8 +72,9 @@ const { ProductModel } = require("../models/Product.model")
 
     })
 
+
 // ------------- Delete req ------------ //
-    
+
 
     productRouter.delete("/product/delete/:prodId" , async (req,res) =>{
         const prodId = req.params.prodId
@@ -91,6 +94,7 @@ const { ProductModel } = require("../models/Product.model")
         }
 
 })
+
 
   productRouter.put("/likes/:postId" ,(req,res) =>{
          const userId = req.body.userId

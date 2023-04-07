@@ -21,6 +21,7 @@ app.get("/" , (req,res) => {
     res.send("welcome home")
 })
 
+
 app.get("/signupdata", async (req,res) =>{
     const user = await Usermodel.find()
     res.send(user)

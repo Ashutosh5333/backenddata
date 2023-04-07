@@ -13,9 +13,6 @@ const authenticate = (req, res, next) => {
              req.body.userId=userId
             //  console.log(decoded)
              
-              // user.findById(p).then(userdata =>{
-              //   req.user=userdata
-              // })
 
             next()
           }
