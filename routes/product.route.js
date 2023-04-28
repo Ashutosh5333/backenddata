@@ -42,7 +42,7 @@ const { ProductModel } = require("../models/Product.model")
             try{
               const product = await ProductModel.create({...payload,postedby:userId})
                  await product.save()
-               res.send({"msg" :"data created sucessfully"})
+               res.send({"msg" :"Post sucessfully"})
             }catch(err){
                 console.log(err)
                 res.send({"msg" :"Something went wrongs"})
@@ -86,7 +86,7 @@ const { ProductModel } = require("../models/Product.model")
                res.send("you are not authorized")
              }else{
                  await ProductModel.findOneAndDelete({_id:prodId})
-                 res.send({"msg" :"data Deleted sucessfully" })
+                 res.send({"msg" :"post Deleted sucessfully" })
              }
         }catch(err){
           console.log(err)

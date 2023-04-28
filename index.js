@@ -54,14 +54,21 @@ app.post("/login", async(req,res) =>{
   try{
     
    const user = await Usermodel.find({email})
-      // console.log(user)
+      console.log(user)
+
      if(user.length > 0){
         const hashed_password = user[0].password;
   
         bcrypt.compare(password,hashed_password,function(err, result){
             if(result){
+       
                 const token= jwt.sign({userId:user[0]._id}, "hush");
-                res.send({"msg":"Login sucessfull", "token":token , data:{email,name,_id,image} })
+                res.send({"msg":"Login sucessfull", "token":token , data:{
+                     name:user[0].name,
+                     email:user[0].email,
+                      _id:user[0]._id,
+                      // image:user[0].image
+                 } })
             }
             else{
               res.send("Please check password")
