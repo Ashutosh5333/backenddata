@@ -67,7 +67,6 @@ app.post("/login", async(req,res) =>{
                      name:user[0].name,
                      email:user[0].email,
                       _id:user[0]._id,
-                      // image:user[0].image
                  } })
             }
             else{
