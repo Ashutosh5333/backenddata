@@ -21,10 +21,46 @@ app.get("/" , (req,res) => {
 })
 
 
-app.get("/signupdata", async (req,res) =>{
-    const user = await Usermodel.find()
+app.get("/user/:uId", async (req,res) =>{
+    const uId = req.params.uId
+    const user = await Usermodel.findOne({_id:uId}).select("-password")
     res.send(user)
 })
+
+
+  app.patch("/user/edit/:uId" , async (req,res) =>{
+  const uId = req.params.uId
+  const payload=req.body
+  try{
+     const productdata = await Usermodel.findByIdAndUpdate({_id:uId},payload)
+     res.send({"msg" :"image updated sucessfully" })
+  }catch(err){
+    console.log(err)
+    res.send({"msg" :"Something went wrongs"})
+   }
+})
+
+
+// app.get("/user/edit/:uId" , async (req,res) =>{
+//   const uId = req.params.uId
+//   const {image,id}=req.body
+//   try{
+//      const productdata = await Usermodel.findOne({_id:uId ,image})
+//        res.send(productdata)
+//     //  res.send({"msg" :"image updated sucessfully" })
+//   }catch(err){
+//     console.log(err)
+//     res.send({"msg" :"Something went wrongs"})
+//    }
+// })
+
+
+app.get("/user", async (req,res) =>{
+  const user = await Usermodel.find()
+  res.send(user)
+})
+
+
 
 
 app.post("/signup", async(req,res) => {
@@ -46,6 +82,7 @@ app.post("/signup", async(req,res) => {
      res.send("Something went wrong ply try again later")
    }
 })
+
 
 
 app.post("/login", async(req,res) =>{
@@ -137,7 +174,7 @@ app.post("/login", async(req,res) =>{
 
 app.use(authenticate)
 app.use(productRouter)
-app.use(profileRouter)
+// app.use(profileRouter)
 
 
 app.listen(8000, async (req,res) =>{
