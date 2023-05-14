@@ -163,6 +163,7 @@ app.post("/login", async(req,res) =>{
 app.use(authenticate)
 app.use(ReelRouter)
 app.use(productRouter)
+app.use(profileRouter)
 
 
 
