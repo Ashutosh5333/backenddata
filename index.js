@@ -7,6 +7,7 @@ const {Usermodel} = require("./models/User.model")
 const { authenticate } = require("./middleware/authenticate")
 const { productRouter } = require("./routes/product.route")
 const { profileRouter } = require("./routes/Profileuser.route")
+const { ReelRouter } = require("./routes/Reel.route")
 
 const app = express()
 app.use(express.json())
@@ -43,7 +44,7 @@ app.get("/user/:uId", async (req,res) =>{
 
 
 
-app.get("/user", async (req,res) =>{
+app.get("/user", async (req,res) => {
   const user = await Usermodel.find()
   res.send(user)
 })
@@ -159,8 +160,8 @@ app.post("/login", async(req,res) =>{
 
     
 
-
 app.use(authenticate)
+app.use(ReelRouter)
 app.use(productRouter)
 
 
