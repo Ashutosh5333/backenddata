@@ -18,19 +18,28 @@ const { ProductModel } = require("../models/Product.model")
       
     })
 
-//     productRouter.get("/insta/:prodId", async (req,res) => {
-//       const prodId = req.params.prodId
-//       try{
-//         const product = await ProductModel.find({prodId}).populate("postedby",["name","email","image"])
-            
-//         .populate("comments.postedby",["name","_id","image","username"])
-    
-//          res.send(product)
-//       }
-//       catch(err){
-//         console.log(err)
-//       }
-// })    
+    productRouter.get("/insta/:prodId", async (req,res) => {
+      const prodId = req.params.prodId
+      const userId = req.body.userId
+      
+      try{
+            // const  Data = await ProductModel.find()
+            //  console.log(Data)
+          // if(Data.userId == prodId){
+            const product = await ProductModel.find({userId:prodId}).populate("postedby",["name","email","image"])
+            .populate("comments.postedby",["name","_id","image","username"])
+            res.send(product)
+          // }else{
+          //   console.log("wrong")
+          // }
+              
+          }
+          catch(err){
+            console.log(err)
+          }
+
+     
+})    
 
 
     
