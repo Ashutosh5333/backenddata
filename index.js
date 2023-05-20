@@ -109,9 +109,10 @@ app.post("/login", async(req,res) =>{
   }
 })
 
-  app.put("/follow", (req,res) =>{
-        // res.send("hello")
-      // const followId = req.body.followId
+
+  app.put("/user/follow", (req,res) =>{
+        res.send("hello")
+      const followId = req.body.followId
       const userId = req.body.userId
          Usermodel.findByIdAndUpdate(req.body.followId,{
          $push:{followers:userId}
@@ -126,7 +127,7 @@ app.post("/login", async(req,res) =>{
         },{
           new:true 
         }).then(result =>{
-          //  console.log(result)
+           console.log(result)
           res.json(result)
         }).catch(err =>{
            return res.status(422).json({error:err})
@@ -136,14 +137,14 @@ app.post("/login", async(req,res) =>{
 
 
 
- app.put("/unfollow", async (req,res) =>{
+ app.put("/user/unfollow", async (req,res) =>{
   const userId = req.body.userId
       Usermodel.findByIdAndUpdate(req.body.unfollowId,{
      $pull:{followers:userId}
  },{
    new:true,
  }), (err,result) =>{
-      if(err){
+      if(err){ 
          return res.status(422).json({error:err})
       }
        Usermodel.findByIdAndUpdate(userId,{
@@ -161,7 +162,7 @@ app.post("/login", async(req,res) =>{
     
 
 app.use(authenticate)
-app.use(ReelRouter)
+app.use(ReelRouter) 
 app.use(productRouter)
 app.use(profileRouter)
 
