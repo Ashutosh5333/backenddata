@@ -98,62 +98,62 @@ const { ReelModel } = require("../models/Reel.model")
 })
 
 
-  ReelRouter.put("/likes/:postId" ,(req,res) =>{
-         const userId = req.body.userId
-        Reelmodel.findByIdAndUpdate(req.params.postId, {
-            $push:{likes:userId}
-         }, {
-          new:true
-         }).exec((err,result) =>{
-           if(err){
-            return res.status(422).json({error:err})
-           }
-           else{
-             res.json(result)
-           }
-         })  
-  })
+  // ReelRouter.put("/likes/:postId" ,(req,res) =>{
+  //        const userId = req.body.userId
+  //       Reelmodel.findByIdAndUpdate(req.params.postId, {
+  //           $push:{likes:userId}
+  //        }, {
+  //         new:true
+  //        }).exec((err,result) =>{
+  //          if(err){
+  //           return res.status(422).json({error:err})
+  //          }
+  //          else{
+  //            res.json(result)
+  //          }
+  //        })  
+  // })
 
 
 
-  ReelRouter.put("/unlikes/:postId" ,(req,res) =>{
-    const userId = req.body.userId
-    Reelmodel.findByIdAndUpdate(req.params.postId, {
-       $pull:{likes:userId}
-    }, {
-     new:true
-    }).exec((err,result) =>{
-      if(err){
-       return res.status(422).json({error:err})
-      }
-      else{
-        res.json(result)
-      }
-    })   
-})
+//   ReelRouter.put("/unlikes/:postId" ,(req,res) =>{
+//     const userId = req.body.userId
+//     Reelmodel.findByIdAndUpdate(req.params.postId, {
+//        $pull:{likes:userId}
+//     }, {
+//      new:true
+//     }).exec((err,result) =>{
+//       if(err){
+//        return res.status(422).json({error:err})
+//       }
+//       else{
+//         res.json(result)
+//       }
+//     })   
+// })
 
 
-ReelRouter.put("/comment/:postId" ,(req,res) => {
-   const userId = req.body.userId
-  const  comment ={
-      text:req.body.text,
-      postedby:userId
-  } 
-  Reelmodel.findByIdAndUpdate(req.params.postId, {
-     $push:{comments:comment}
-  }, {
-   new:true
-  }).populate("comments.postedby",["name","_id","image","username"]) 
-  .populate("postedby",["name","_id","image","username"])
-  .exec((err,result) =>{
-    if(err){
-     return res.status(422).json({error:err})
-    }
-    else{
-      res.json(result)
-    }
-  })   
-})
+// ReelRouter.put("/comment/:postId" ,(req,res) => {
+//    const userId = req.body.userId
+//   const  comment ={
+//       text:req.body.text,
+//       postedby:userId
+//   } 
+//   Reelmodel.findByIdAndUpdate(req.params.postId, {
+//      $push:{comments:comment}
+//   }, {
+//    new:true
+//   }).populate("comments.postedby",["name","_id","image","username"]) 
+//   .populate("postedby",["name","_id","image","username"])
+//   .exec((err,result) =>{
+//     if(err){
+//      return res.status(422).json({error:err})
+//     }
+//     else{
+//       res.json(result)
+//     }
+//   })   
+// })
  
 
 
