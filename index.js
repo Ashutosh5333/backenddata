@@ -111,8 +111,8 @@ app.post("/login", async(req,res) =>{
 
 
   app.put("/user/follow", (req,res) =>{
-        res.send("hello")
-      const followId = req.body.followId
+      
+      // const followId = req.body.followId
       const userId = req.body.userId
          Usermodel.findByIdAndUpdate(req.body.followId,{
          $push:{followers:userId}
