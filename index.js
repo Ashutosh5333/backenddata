@@ -22,7 +22,7 @@ app.get("/" , (req,res) => {
 })
 
 
-app.get("/user/:uId", async (req,res) =>{
+app.get("/user/:uId", async (req,res) => {
     const uId = req.params.uId
     const user = await Usermodel.findOne({_id:uId}).select("-password")
     res.send(user)
@@ -110,12 +110,40 @@ app.post("/login", async(req,res) =>{
 })
 
 
+   app.put("/follow/:uId", async (req,res) =>{
+        const uId = req.params.uId
+        const followId = req.body.userId
+        Usermodel.findByIdAndUpdate(uId,{
+          $push:{followers:followId}
+      },{
+        new:true,
+      }).exec((err,result) => {
+           if(err){
+              return res.status(422).json({error:err})
+           }
+            Usermodel.findByIdAndUpdate(uId,{ 
+             $push:{following:followId}
+         },{
+           new:true 
+         }).then(result =>{
+           res.json(result)
+         }).catch(err =>{
+            return res.status(422).json({error:err})
+         })
+       })
+ 
+   })
+
+
+
+
   app.put("/user/follow", (req,res) =>{
       
       // const followId = req.body.followId
       const userId = req.body.userId
          Usermodel.findByIdAndUpdate(req.body.followId,{
          $push:{followers:userId}
+        
      },{
        new:true,
      }), (err,result) => {
@@ -126,10 +154,10 @@ app.post("/login", async(req,res) =>{
             $push:{following: req.body.followId}
         },{
           new:true 
-        }).then(result =>{
+        }).select("password").then(result =>{
            console.log(result)
           res.json(result)
-        }).catch(err =>{
+        }).catch(err => {
            return res.status(422).json({error:err})
         })
       }

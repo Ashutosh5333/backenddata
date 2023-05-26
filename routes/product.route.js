@@ -120,11 +120,11 @@ const { ProductModel } = require("../models/Product.model")
             $push:{likes:userId}
          }, {
           new:true
-         }).exec((err,result) =>{
+         }).exec((err,result) => {
            if(err){
             return res.status(422).json({error:err})
            }
-           else{
+           else {
              res.json(result)
            }
          })  
