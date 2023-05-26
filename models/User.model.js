@@ -9,8 +9,8 @@ const UserSchema = mongoose.Schema({
         // default:"https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
     role:{type:String,default:"user"},
-    followers:{type:mongoose.Types.ObjectId,ref:"user"},
-    following:{type:mongoose.Types.ObjectId,ref:"user"}
+    followers:[{type:mongoose.Types.ObjectId,ref:"user"}],
+    following:[{type:mongoose.Types.ObjectId,ref:"user"}]
 
 })
 
